@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ post.title }}
+{% endblock %}
+
+
+{% block content %}
+<div class="container">
+    {% if post.image %}
+    <p class="mt-md-6"><img src="{{ post.image.url }}"></p>
+    {% endif %}
+    {{ post.body|safe|linebreaks }}
+
+</div>
+
+{% endblock %}
