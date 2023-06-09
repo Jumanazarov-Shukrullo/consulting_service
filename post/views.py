@@ -1,26 +1,73 @@
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail, BadHeaderError
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Count
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.postgres.search import SearchVector, SearchRank, SearchQuery
+from django.shortcuts import get_object_or_404
 
 from taggit.models import Tag
 
-from .models import Post
-from .forms import EmailForm, SearchForm, ContactForm, PostForm
+from .models import Post, Contact, Services, FAQ, Laws, ServiceCategory
+from .forms import EmailForm, SearchForm, PostForm
 
 
 def home_view(request):
-    return render(request, 'home.html')
+    services = Services.objects.all()
+    laws = Laws.objects.all()
+    context = {
+        'services': services,
+        'laws': laws
+    }
+    if request.method == 'POST':
+        service_name = request.POST.get('services')
+        service = get_object_or_404(Services, name=service_name)
+
+        # Perform validation on the form data
+        name = request.POST.get('name')
+        phone = request.POST.get('phone')
+        message = request.POST.get('message')
+
+        if not name:
+            messages.error(request, 'Please enter your name.')
+        elif not phone:
+            messages.error(request, 'Please enter your phone number.')
+        elif not message:
+            messages.error(request, 'Please enter a message.')
+        else:
+            contact = Contact(
+                name=name,
+                services=service,
+                phone=phone,
+                message=message
+            )
+            contact.save()
+            messages.success(request, 'Success')
+            return HttpResponseRedirect('/')
+
+    return render(request, 'home.html', context=context)
 
 
 def about_us(request):
-    return render(request, 'about_us.html')
+    laws = Laws.objects.all()
+    context = {
+        'laws': laws
+    }
+    return render(request, 'about_us.html', context=context)
+
+
+def services(request):
+    laws = Laws.objects.all()
+    context = {
+        'laws': laws
+    }
+    return render(request, 'services.html', context=context)
 
 
 def post_list(request, tag_slug=None):
+    laws = Laws.objects.all()
     posts_list = Post.objects.all()
     tag = None
     if tag_slug:
@@ -37,6 +84,7 @@ def post_list(request, tag_slug=None):
     context = {
         'posts': posts,
         'tag': tag,
+        'laws': laws
     }
     return render(request, 'list.html', context=context)
 
@@ -59,6 +107,7 @@ def post_add(request):
 
 
 def post_detail(request, post_slug):
+    laws = Laws.objects.all()
     post = get_object_or_404(Post,
                              status=Post.Status.PUBLISHED,
                              slug=post_slug)
@@ -70,6 +119,7 @@ def post_detail(request, post_slug):
     context = {
         'post': post,
         'similar_pots': similar_posts,
+        'laws': laws,
     }
     return render(request, 'list_detail.html', context=context)
 
@@ -122,21 +172,92 @@ def post_search(request):
 
 
 def contact_us(request):
-    if request.method == "GET":
-        form = ContactForm()
-    else:
-        form = ContactForm(request.POST)
-        if form.is_valid():
-            subject = form.cleaned_data["subject"]
-            from_email = form.cleaned_data["from_email"]
-            message = form.cleaned_data['message']
-            try:
-                send_mail(subject, message, from_email, ["shukrullo.coder@gmail.com"])
-            except BadHeaderError:
-                return HttpResponse("Invalid header found.")
-            return redirect("success")
-    return render(request, "contact_us.html", {"form": form})
+    laws = Laws.objects.all()
+    services = Services.objects.all()
+    context = {
+        'services': services,
+        'laws': laws
+    }
+    if request.method == 'POST':
+        service_name = request.POST.get('services')
+        service = get_object_or_404(Services, name=service_name)
+
+        # Perform validation on the form data
+        name = request.POST.get('name')
+        phone = request.POST.get('phone')
+        message = request.POST.get('message')
+
+        if not name:
+            messages.error(request, 'Please enter your name.')
+        elif not phone:
+            messages.error(request, 'Please enter your phone number.')
+        elif not message:
+            messages.error(request, 'Please enter a message.')
+        else:
+            contact = Contact(
+                name=name,
+                services=service,
+                phone=phone,
+                message=message
+            )
+            contact.save()
+            messages.success(request, 'Success')
+            return HttpResponseRedirect('/contact/')
+
+    return render(request, 'contact_us.html', context=context)
 
 
-def success_view(request):
-    return HttpResponse('Success')
+def services_view(request, service_slug):
+    laws = Laws.objects.all()
+    services = Services.objects.all()
+    service = get_object_or_404(Services,
+                                slug=service_slug)
+    if request.method == 'POST':
+        service_name = request.POST.get('services')
+        service = get_object_or_404(Services, name=service_name)
+
+        # Perform validation on the form data
+        name = request.POST.get('name')
+        phone = request.POST.get('phone')
+        message = request.POST.get('message')
+
+        if not name:
+            messages.error(request, 'Please enter your name.')
+        elif not phone:
+            messages.error(request, 'Please enter your phone number.')
+        elif not message:
+            messages.error(request, 'Please enter a message.')
+        else:
+            contact = Contact(
+                name=name,
+                services=service,
+                phone=phone,
+                message=message
+            )
+            contact.save()
+            messages.success(request, 'Success')
+            return HttpResponseRedirect(f'/services/{service_slug}/')
+    context = {
+        'service': service,
+        'services': services,
+        'laws': laws,
+    }
+    return render(request, 'service_detail.html', context=context)
+
+
+def faqs_view(request):
+    faqs = FAQ.objects.all()
+    laws = Laws.objects.all()
+    context = {
+        'faqs': faqs,
+        'laws': laws,
+    }
+    return render(request, 'faqs.html', context=context)
+
+
+def laws_view(request, law_slug):
+    law = Laws.objects.get(slug=law_slug)
+    context = {
+        'law': law
+    }
+    return render(request, 'laws.html', context=context)

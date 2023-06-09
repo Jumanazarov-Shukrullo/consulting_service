@@ -135,3 +135,74 @@ class Team(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class ServiceCategory(models.Model):
+    name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'Category'
+        verbose_name_plural = 'Categories'
+
+
+class Laws(models.Model):
+    title = models.CharField(max_length=255)
+    body = RichTextField(null=True, blank=True)
+    slug = models.SlugField(max_length=255)
+
+    class Meta:
+        verbose_name = 'Laws'
+        verbose_name_plural = 'Laws'
+
+    def __str__(self):
+        return self.title
+
+    def get_absolute_url(self):
+        return f'laws/{self.slug}/'
+
+
+class Services(models.Model):
+    name = models.CharField(max_length=100, null=True)
+    desc = models.CharField(max_length=255, null=True)
+    body = RichTextField(null=True, blank=True)
+    slug = models.SlugField(max_length=100, null=True)
+    cat = models.ForeignKey(ServiceCategory, on_delete=models.DO_NOTHING)
+
+    class Meta:
+        verbose_name = 'Service'
+        verbose_name_plural = 'Services'
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return f"services/{self.slug}/"
+
+
+STATUS = (
+    ('Read', 'Read',),
+    ('Unread', 'Unread'),
+)
+
+
+class Contact(models.Model):
+    name = models.CharField(max_length=200)
+    services = models.ForeignKey(Services, on_delete=models.SET_NULL, null=True)
+    phone = models.CharField(max_length=13)
+    message = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    Status = models.CharField(max_length=10, null=True, choices=STATUS, default='Unread')
+
+    def __str__(self):
+        return self.name
+
+
+class FAQ(models.Model):
+    name = models.CharField(max_length=255)
+    body = models.TextField()
+
+    def __str__(self):
+        return self.name

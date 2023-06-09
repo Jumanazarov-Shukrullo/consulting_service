@@ -12,12 +12,12 @@
     IMPORT FILES
 -------------------------------------------------------------------*/
 
-@import url(animate.css);
-@import url(camera.css);
-@import url(flaticon.css);
-@import url(prettyPhoto.css);
-@import url(owl.carousel.css);
-@import url(font-awesome.min.css);
+@import url('css/animate.css');
+@import url('css/camera.css');
+@import url('css/flaticon.css');
+@import url('css/prettyPhoto.css');
+@import url('css/owl.carousel.css');
+@import url('css/font-awesome.min.css');
 
 /*------------------------------------------------------------------
     SKELETON
@@ -35,7 +35,7 @@ html, body{
 }
 
 body.demos .section {
-    background: url(bg.png) repeat top center #f2f3f5;
+    background: url('images/bg.png') repeat top center #f2f3f5;
 }
 
 body.demos .section-title img {
@@ -283,7 +283,6 @@ a img.aligncenter {
     clip: auto !important;
     color: #21759b;
     display: block;
-    font-size: 14px;
     font-size: 0.875rem;
     font-weight: bold;
     height: auto;
@@ -342,7 +341,7 @@ a img.aligncenter {
 .navbar-dark .navbar-nav .nav-link.active::after {
 	width: 100%;
 	height: 42px;
-	border-radius: 100px 100px 0px 100px;
+	border-radius: 100px 100px 0 100px;
 }
 
 
@@ -403,11 +402,11 @@ a img.aligncenter {
 }
 .heading p{
 	font-size: 18px;
-	padding: 20px 0px;
+	padding: 20px 0;
 }
 
 .heading h3{
-	color: ffffff;
+	color: #fff;
 }
 
 .cd-words-wrapper {
@@ -471,13 +470,12 @@ xclip
 #mainNav.navbar-shrink {
     padding-top: 10px;
     padding-bottom: 10px;
-    background-color: #ffffff;
-	-webkit-animation: fadeInDown 700ms;
+    -webkit-animation: fadeInDown 700ms;
 	animation: fadeInDown 700ms;
 	-webkit-backface-visibility: hidden;
-	border-radius: 0px;
-	background: rgba(255, 255, 255) none repeat;
-	box-shadow: -1px 1px 1px rgba(0, 0, 0, 0.1);
+	border-radius: 0;
+    background: rgba(255, 255, 255) none repeat;
+    box-shadow: -1px 1px 1px rgba(0, 0, 0, 0.1);
 }
 
 #clouds{
@@ -518,7 +516,9 @@ xclip
 .section.wb {
     background-color: #ffffff;
 }
-
+.section.wwb {
+    background-color: #dcdada;
+}
 .section.lb {
     background-color: #f2f3f5;
 }
@@ -604,7 +604,7 @@ xclip
 	position: relative;
 	border: 1px solid #333333;
 	overflow: hidden;
-	padding: 0px 18px;
+	padding: 0 18px;
 	display: inline-block;
 }
 
@@ -612,7 +612,7 @@ xclip
 	text-align: center;
 	margin-right: auto;
 	margin-left: auto;
-	margin-top: 0px;
+	margin-top: 0;
 	cursor: pointer;
 }
 
@@ -659,8 +659,8 @@ xclip
 
 .right-box-pro{
 	position: relative;
-	-webkit-box-shadow: 0px 0px 30px -4px rgba(0, 0, 0, 0.3);
-	box-shadow: 0px 0px 30px -4px rgba(0, 0, 0, 0.3);
+	-webkit-box-shadow: 0 0 30px -4px rgba(0, 0, 0, 0.3);
+	box-shadow: 0 0 30px -4px rgba(0, 0, 0, 0.3);
 }
 .right-box-pro img{
 	position: relative;
@@ -668,10 +668,10 @@ xclip
 }
 .right-box-pro::before {
     content: "";
-    background: url(country-quilt-dark.png);
+    background: url('images/country-quilt-dark.png');
     width: 100%;
     height: 100%;
-	border-radius: 100px 100px 0px 100px;
+	border-radius: 100px 100px 0 100px;
     position: absolute;
     bottom: -20px;
     right: -20px;
@@ -684,7 +684,7 @@ xclip
 	padding: 15px;
 	background: #ffffff;
 	margin-bottom: 30px;
-	border-radius: 50px 50px 0px 50px;
+	border-radius: 50px 50px 0 50px;
 	position: relative;
 	transition: all 0.3s ease-in-out 0s;
 }
@@ -714,13 +714,13 @@ xclip
 
 .services-inner-box::after{
 	background: #28a9e2;
-	width: 0px;
-	height: 0px;
+	width: 0;
+	height: 0;
 	content: "";
 	position: absolute;
-	right: 0px;
-	bottom: 0px;
-	border-radius: 50px 50px 0px 50px;
+	right: 0;
+	bottom: 0;
+	border-radius: 50px 50px 0 50px;
 	transition: all 0.3s ease-in-out 0s;
 	z-index: 0;
 }
@@ -829,7 +829,6 @@ xclip
 
 .item-h2,
 .item-h1 {
-    height: 100% !important;
     height: auto !important;
 }
 
@@ -1221,7 +1220,7 @@ xclip
 
 .icon-wrapper p small:after {
     content: "\f105";
-    font-family: FontAwesome;
+    font-family: FontAwesome, sans-serif;
     margin-left: 5px;
     font-size: 11px;
 }
@@ -1238,7 +1237,7 @@ xclip
 	float: left;
 	width: 100%;
 	padding-bottom: 15px;
-	margin-bottom: 0px;
+	margin-bottom: 0;
 	position: relative;
 	line-height: 12px;
 }
@@ -1248,14 +1247,13 @@ xclip
 }
 
 .event_dit ul li a{
-	padding: 0px 5px;
+	padding: 0 5px;
 	font-size: 14px;
 	line-height: 25px;
 	transition: all 0.3s ease-in-out;
 	-webkit-transition: all 0.3s ease-in-out;
 	-moz-transition: all 0.3s ease-in-out;
 	-o-transition: all 0.3s ease-in-out;
-	-moz-transition: all 0.3s ease-in-out;
 }
 
 .event_dit ul li a:hover{
@@ -1278,19 +1276,18 @@ xclip
 	content: "";
 	position: absolute;
 	border-radius: 100%;
-	top: 0px;
-	left: 0px;
-	right: 0px;
-	bottom: 0px;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
 	margin: auto;
-	width: 0px;
-	height: 0px;
+	width: 0;
+	height: 0;
 	opacity: 0.7;
 	transition: all 0.3s ease-in-out;
 	-webkit-transition: all 0.3s ease-in-out;
 	-moz-transition: all 0.3s ease-in-out;
 	-o-transition: all 0.3s ease-in-out;
-	-moz-transition: all 0.3s ease-in-out;
 }
 
 .participate-wrap figure figcaption{
@@ -1304,7 +1301,6 @@ xclip
 	-webkit-transition: all 0.3s ease-in-out;
 	-moz-transition: all 0.3s ease-in-out;
 	-o-transition: all 0.3s ease-in-out;
-	-moz-transition: all 0.3s ease-in-out;
 }
 
 .participate-wrap figure figcaption .global-radius{
@@ -1319,7 +1315,7 @@ xclip
 .participate-wrap:hover figure::before{
 	width: 100%;
 	height: 100%;
-	border-radius: 0px;
+	border-radius: 0;
 }
 
 .participate-wrap:hover figure figcaption {
@@ -1352,9 +1348,8 @@ xclip
     font-size: 38px;
     font-weight: 600;
     padding: 0 0 10px;
-    margin: 0;
     line-height: 62px;
-    margin-top: 0;
+    margin: 0;
     text-transform: none;
 }
 
@@ -1567,10 +1562,9 @@ hr.invis1 {
 }
 
 .filter-button-group{
-	border-radius: 0px;
-	margin: 10px 0px;
+    margin: 10px 0;
 	display: block;
-	border-radius: 100px 100px 0px 100px;
+	border-radius: 100px 100px 0 100px;
 }
 
 .filter-button-group button.active{
@@ -1590,8 +1584,7 @@ hr.invis1 {
 	background: #fff;
 	padding: 12px 40px;
 	border: none;
-	border-radius: 0px;
-	border-radius: 100px 100px 0px 100px;
+    border-radius: 100px 100px 0 100px;
 }
 
 
@@ -2228,7 +2221,7 @@ select.mobile-device {
 }
 
 #contact {
-    background: url(1.jpg) no-repeat center center #ffffff;
+    background: url('images/1.jpg') no-repeat center center #ffffff;
 }
 
 .contact_form textarea.form-control{

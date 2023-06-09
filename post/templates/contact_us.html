@@ -1,91 +1,234 @@
-{% extends 'base.html' %}
+{% load static %}
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{% static '/custom/style.css' %}   ">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Contact Us</title>
+    <link rel="shortcut icon" href="{% static '/images/favicon.ico' %}" type="image/x-icon"/>
+    <link rel="apple-touch-icon" href="{% static '/images/apple-touch-icon.png' %}">
+    <link href="{% static '/fontawesomefree/css/all.min.css' %}" rel="stylesheet" type="text/css">
 
-
-{% block title %}
-Contacts
-{% endblock %}
-
-
-{% block content %}
-<div class="contactUs">
-    <div class="title">
-        <h2>Get in touch</h2>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static '/css/bootstrap.min.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <!-- Site CSS -->
+    <link rel="stylesheet" href="{% static '/style.css' %}">
+    <!--    <link rel="stylesheet" href="{% static '/contact.css' %}">-->
+    <!-- Responsive CSS -->
+    <link rel="stylesheet" href="{% static '/css/responsive.css' %}">
+    <!-- Custom CSS -->
+    <!--    <link rel="stylesheet" href="{% static 'custom.css' %}">-->
+    <script src="{% static '/js/modernizr.js' %}"></script> <!-- Modernizr -->
+</head>
+<body onunload="">
+<nav class="navbar navbar-expand-lg navbar-default fixed-top" id="mainNav">
+    <div class="container">
+        <a class="navbar-brand js-scroll-trigger" href="/">
+            <img class="img-fluid" src="{% static '/images/logo.png' %}" alt=""/>
+        </a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+                data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+                aria-label="Toggle navigation">
+            <i class="fa-sharp fa-solid fa-bars"></i></button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav text-uppercase ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" href="{% url 'post:home' %}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" href="{% url 'post:about' %}">About Us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" href="{% url 'post:services' %}">Services</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" href="{% url 'post:post_list' %}">Blog</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" href="{% url 'post:contact' %}">Contact Us</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#"
+                       data-bs-toggle="dropdown" aria-expanded="false">Laws</a>
+                    <ul class="dropdown-menu dropdown-menu-dark">
+                        {% for law in laws %}
+                        <li><a class="dropdown-item" href="{{ law.get_absolute_url }}">{{law.title}}</a></li>
+                        {% endfor %}
+                    </ul>
+                </li>
+            </ul>
+        </div>
     </div>
-    <div class="box">
-        <div class="contact form">
-            <h3>Send a message</h3>
-            <form>
-                <div class="formBox">
-                    <div class="row50">
-                        <div class="inputBox">
-                            <span>First Name</span>
-                            <input type="text" placeholder="john">
+</nav>
+
+<div class="section lb">
+    <div class="contactUs">
+        <h1 style="margin-top: 100px; margin-bottom: 150px; font-size: 50px; font-family: 'Poppins',sans-serif; justify-content: center; align-items: center;text-align: center;">
+            Get in touch</h1>
+        <div class="box">
+            <div class="contact form" style="border-radius: 10px;">
+                <h3>Send a message</h3>
+                <form method="post" action="{% url 'post:contact' %}" autocomplete="off">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <input class="form-control" name="name" type="text"
+                                       placeholder="Your Name"
+                                       required="required"
+                                       data-validation-required-message="Please enter your name."
+                                       style="border-color: #000000; border-radius: 10px; height: 55px;"
+                                >
+                                <p class="help-block text-danger"></p>
+                            </div>
+                            <div class="form-group">
+                                <select name="services" type="text" class="form-control"
+                                        style="border-color: #000000; border-radius: 10px; height: 55px;">
+                                    {% for service in services %}
+                                    <option value="{{ service.name }}">{{service.name}}</option>
+                                    {% endfor %}
+                                </select>
+                                <p class="help-block text-danger"></p>
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" name="phone" type="tel"
+                                       placeholder="+998901234567"
+                                       required="required" pattern="[+][0-9]{3}[0-9]{2}[0-9]{7}"
+                                       data-validation-required-message="Please enter your phone number."
+                                       style="border-color: #000000; border-radius: 10px; height: 55px;"
+                                >
+                                <p class="help-block text-danger"></p>
+                            </div>
                         </div>
-                        <div class="inputBox">
-                            <span>Last Name</span>
-                            <input type="text" placeholder="Doe">
+                        <div class="form-group">
+                                        <textarea class="form-control" name="message" placeholder="Your Message"
+                                                  required="required"
+                                                  data-validation-required-message="Please enter a message."
+                                                  style="border-radius: 10px;  border-color: #000000; height: 300px;"></textarea>
+                            <p class="help-block text-danger"></p>
+                        </div>
+                        <div class="col-lg-12 text-center">
+                            <button class="sim-btn hvr-bounce-to-top" type="submit">Send
+                                Message
+                            </button>
                         </div>
                     </div>
-                    <div class="row50">
-                        <div class="inputBox">
-                            <span>Email</span>
-                            <input type="email" placeholder="john@gmail.com">
-                        </div>
-                        <div class="inputBox">
-                            <span>Mobile</span>
-                            <input type="text" placeholder="+998 90 1234567 ">
-                        </div>
-                    </div>
-                    <div class="row100">
-                        <div class="inputBox">
-                            <span>Message</span>
-                            <textarea placeholder="Write your message"></textarea>
-                        </div>
-                    </div>
-                    <div class="row100">
-                        <div class="inputBox">
-                            <input type="submit" value="Send">
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </div>
-        <div class="contact info">
-            <h3>Contact Info</h3>
-            <div class="infoBox">
-                <div>
-                    <span><ion-icon name="location"></ion-icon></span>
-                    <p>Address, Address <br>Uzb</p>
-                </div>
-                <div>
-                    <span><ion-icon name="mail"></ion-icon></span>
-                    <a href="mailto:shukrullo.coder@gmail.com">email</a>
-                </div>
-                <div>
-                    <span><ion-icon name="call"></ion-icon></span>
-                    <a href="tel:+998908198617">+998908198617</a>
-                </div>
-                <ul class="sci">
-                    <li><a href="#">
-                        <i class='fab fa-facebook-f'></i>
-                    </a></li>
-                    <li><a href="#">
-                        <i class='fab fa-instagram'></i>
-                    </a></li>
-                    <li><a href="#">
-                        <i class='fab fa-telegram'></i>
-                    </a>
-                    </li>
-                </ul>
+                </form>
+
             </div>
-            <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-            <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-        </div>
-        <div class="contact map">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5996.2410050494755!2d69.21805144646706!3d41.28448179737865!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38ae8bd3529d879d%3A0xfcdcd227350eb7ef!2sOOO%20Vivasan!5e0!3m2!1sen!2s!4v1685448023502!5m2!1sen!2s"
-                    style="border:0;" allowfullscreen="" loading="lazy"
-                    referrerpolicy="no-referrer-when-downgrade"></iframe>
+            <div class="contact info" style="border-radius: 10px">
+                <h3>Contact Info</h3>
+                <div class="infoBox">
+                    <div>
+                        <span><ion-icon name="location"></ion-icon></span>
+                        <p>Address, Address <br>Uzb</p>
+                    </div>
+                    <div>
+                        <span><ion-icon name="mail"></ion-icon></span>
+                        <a href="mailto:shukrullo.coder@gmail.com">email</a>
+                    </div>
+                    <div>
+                        <span><ion-icon name="call"></ion-icon></span>
+                        <a href="tel:+998908198617">+998908198617</a>
+                    </div>
+                    <ul class="sci">
+                        <li><a href="#">
+                            <ion-icon name="logo-facebook"></ion-icon>
+                        </a></li>
+                        <li><a href="#">
+                            <ion-icon name="logo-instagram"></ion-icon>
+                        </a></li>
+                        <li><a href="#"><i class="fa fa-telegram"></i></a>
+                        </li>
+                    </ul>
+                </div>
+                <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+                <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+            </div>
+            <div class="contact map" style="border-radius: 10px">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5996.2410050494755!2d69.21805144646706!3d41.28448179737865!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38ae8bd3529d879d%3A0xfcdcd227350eb7ef!2sOOO%20Vivasan!5e0!3m2!1sen!2s!4v1685448023502!5m2!1sen!2s"
+                        style="border:0;" allowfullscreen="" loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
         </div>
     </div>
 </div>
-{% endblock %}
+{% if messages %}
+{% for message in messages %}
+{% if message.tags == 'success' %}
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"
+        integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g="
+        crossorigin="anonymous"></script>
+<script>
+    $(document).ready(function () {
+        $("#exampleModal").modal("show");
+    });
+</script>
+{% endif %}
+{% endfor %}
+{% endif %}
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="justify-content-center">
+                    <h6 class="modal-title" id="exampleModalLabel"><i class="fas fa-check"></i> &nbsp;&nbsp;Great!!</h6>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <div class="text-center tmt-3">
+                    <i class="far fa-check-circle fa-6x" style="color: #a5dc86"></i>
+                </div>
+                <br>
+                <div class="mb-3"><strong>Message sent successfully</strong></div>
+                <h6 style="font-size: 12px;"> We will contact you</h6>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal" style="width: 65px;">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="copyrights">
+    <div class="container">
+        <div class="footer-distributed">
+            <a href="#"><img src="{% static 'images/logo.png' %}" alt=""/></a>
+            <div class="footer-center">
+                <p class="footer-links">
+                    <a href="#">Home</a>
+                    <a href="#">Blog</a>
+                    <a href="#">Pricing</a>
+                    <a href="#">About</a>
+                    <a href="#">Faq</a>
+                    <a href="#">Contact</a>
+                </p>
+                <p class="footer-company-name">All Rights Reserved. &copy; 2018 <a href="#">OnNext</a> Design By :
+                    <a href="https://html.design/">html design</a></p>
+            </div>
+        </div>
+    </div><!-- end container -->
+</div><!-- end copyrights -->
+<a href="#" id="scroll-to-top" class="dmtop"><i class="fa-solid fa-angle-up"></i></a>
+
+<!-- ALL JS FILES -->
+<script src="{% static 'js/all.js' %}"></script>
+<!-- Camera Slider -->
+<script src="{% static 'js/jquery.mobile.customized.min.js' %}"></script>
+<script src="{% static 'js/jquery.easing.1.3.js' %}"></script>
+<script src="{% static 'js/parallaxie.js' %}"></script>
+<script src="{% static 'js/headline.js' %}"></script>
+<!-- Contact form JavaScript -->
+<!-- ALL PLUGINS -->
+<script src="{% static 'js/custom.js' %}"></script>
+<script src="{% static 'js/jquery.vide.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
+</body>
+</html>

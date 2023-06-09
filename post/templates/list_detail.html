@@ -10,7 +10,7 @@
     {% if post.image %}
     <p class="mt-md-6"><img src="{{ post.image.url }}"></p>
     {% endif %}
-    {{ post.body|safe|linebreaks }}
+    {{ post.body|safe }}
 
 </div>
 

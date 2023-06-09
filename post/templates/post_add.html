@@ -5,7 +5,7 @@
         <form action="" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.as_p }}
-            {{form.media}}
+            {{ form.media }}
             <input class="btn btn-primary" type="submit" name="Submit">
         </form>
     </div>
