@@ -9,3 +9,4 @@ Pillow==9.5.0
 psycopg==3.1.9
 sqlparse==0.4.4
 typing_extensions==4.5.0
+whitenoise==6.4.0
