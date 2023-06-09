@@ -161,7 +161,7 @@ class Laws(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return f'laws/{self.slug}/'
+        return f'/laws/{self.slug}/'
 
 
 class Services(models.Model):
